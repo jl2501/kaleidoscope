@@ -1,0 +1,78 @@
+#- Every node that has a dict gets put into a list, reversed then instantiates a ChainMap
+#- Complete Node keys:
+#       - name 
+#       - description 
+#       - colors 
+#       - attributes
+#
+#       Attributes:
+#           - can be a simple name
+#           - can be a dictionary with keys:
+#               - length - an integer
+#               - formatter - map of runtime importable callable name and named keyword args
+
+
+#- sequence of keys here should match object type as returned by type()
+boto3:
+    resources:
+        factory:
+            ec2:
+                description: default colors for AWS EC2
+                colors:
+                    - lightgreen
+                    - bright lightgreen
+                    - lightgreen
+                    - dim lightgreen
+
+                Instance:
+                    description: default style for boto3 AWS EC2 instance objects
+
+                    attributes:
+                        - vpc_id
+                        - instance_id
+                        - "state['Name']"
+                        - "placement['AvailabilityZone']"
+                        - subnet_id
+                        - key_name
+                        - private_ip_address
+                        - public_ip_address
+                        - launch_time:
+                            length: 16
+                        - security_groups
+
+                SecurityGroup: 
+                    description: default style for boto3 AWS EC2 security groups
+                    attributes:
+                        - group_name
+                        - vpc_id
+                        - description:
+                            length: 20
+                        - group_id
+                        - meta.client.meta.region_name
+                        - ip_permissions:
+                            formatter:
+                                name: kaleidoscope.formatter.boto3.resources.factory.ec2.SecurityGroup.ip_permissions.format_ip_permissions
+                                ec2_rs: cush.applications.default.implementor.boto3.aws.ec2.resource._list_leaves()
+                        - ip_permissions_egress:
+                            formatter: kaleidoscope.formatter.boto3.resources.factory.ec2.SecurityGroup.ip_permissions.format_ip_permissions
+                Snapshot:
+                    description: EC2 Snapshots of EBS Volumes
+                    attributes:
+                        - id
+                        - meta.client.meta.region_name
+                        - owner_id
+                        - start_time
+                        - volume_id
+                        - state
+                        - description
+                Volume:
+                    description: EC2 EBS volume objects
+                    attributes:
+                        - id
+                        - meta.client.meta.region_name
+                        - state
+                        - create_time
+                        - size
+                        - volume_type
+                        - iops
+                        - encrypted
