@@ -6,6 +6,7 @@ authors = ["James Light <j.gareth.light@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.5"
+colorama = "^0.4.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^4.6"
