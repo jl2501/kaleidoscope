@@ -5,8 +5,10 @@ description = ""
 authors = ["James Light <j.gareth.light@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.5"
+python = "^3.6"
 colorama = "^0.4.3"
+ipython = "^7.13.0"
+"ruamel.yaml" = "^0.16.10"
 
 [tool.poetry.dev-dependencies]
 pytest = "^4.6"
