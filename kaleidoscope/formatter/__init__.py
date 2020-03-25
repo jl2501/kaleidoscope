@@ -24,7 +24,6 @@ def load_formatters(path=None, prefix='kaleidoscope.formatter'):
     all_pkgs = filter(lambda x: x.ispkg, all_module_infos)
     all_modules = itertools.filterfalse(lambda x: x.ispkg, all_module_infos)
 
-    #- packages are already imported by walk_packages() code
     successful_imports = list(all_pkgs)
 
     for modinfo in all_modules:
