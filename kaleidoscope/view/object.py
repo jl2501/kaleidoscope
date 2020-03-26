@@ -74,7 +74,9 @@ class ObjectView(ViewABC):
         if per_attr_text_lines:
             object_view_lines = len( max(*per_attr_text_lines, key=len))
         else:
-            object_view_lines = 1
+            #- TODO: this assumes that we are always rendering attributes
+            #- for builtins, that won't work
+            object_view_lines = 0
             log.debug(f"no attributes to render")
         log.debug("{} lines in this object view".format(object_view_lines))
 
