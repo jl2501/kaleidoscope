@@ -10,7 +10,7 @@ colorama = "^0.4.3"
 ipython = "^7.13.0"
 "ruamel.yaml" = "^0.16.10"
 "thewired" = { git = "git@github.com:jl2501/thewired.git" }
-boto3 = "^1.12.29"
+botocore = "^1.15.29"
 
 [tool.poetry.dev-dependencies]
 pytest = "^4.6"
