@@ -64,7 +64,7 @@ class ObjectModelSpec(object):
             log.debug("parsing attributes: {}".format(attributes))
             self.attributes = self.parse_attributes(attributes)
         else:
-            log.warning("spec has no attributes specified.")
+            log.info("spec has no attributes specified.")
             self.attributes = None
 
         log.debug("initialized: {}".format(self))

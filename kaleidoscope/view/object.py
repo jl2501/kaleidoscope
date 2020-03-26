@@ -71,7 +71,11 @@ class ObjectView(ViewABC):
             per_attr_lines[n] = [ColoredText(txt, attr_view.color) for txt in text_lines]
 
         #- figure out how many lines this object will take up
-        object_view_lines = len( max(*per_attr_text_lines, key=len))
+        if per_attr_text_lines:
+            object_view_lines = len( max(*per_attr_text_lines, key=len))
+        else:
+            object_view_lines = 1
+            log.debug(f"no attributes to render")
         log.debug("{} lines in this object view".format(object_view_lines))
 
         #- combine the lists of attribute lines into a single list of object lines

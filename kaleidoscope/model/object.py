@@ -119,11 +119,11 @@ class ObjectModel(ModelABC):
         log.debug("Entering")
         log.debug("enumerating attributes from spec: {}".format(spec.attributes))
         attribute_models = list()
-        for attribute in spec.attributes:
-            _am = AttributeModel(self.source_object, *attribute, color=next(spec.colors))
-            attribute_models.append(_am)
+        if spec.attributes:
+            for attribute in spec.attributes:
+                _am = AttributeModel(self.source_object, *attribute, color=next(spec.colors))
+                attribute_models.append(_am)
                 
-
         log.debug("Exiting: attribute_models: {}".format(attribute_models))
         return attribute_models
 
