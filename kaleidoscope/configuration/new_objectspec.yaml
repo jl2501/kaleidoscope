@@ -76,3 +76,11 @@ boto3:
                         - volume_type
                         - iops
                         - encrypted
+builtins:
+  int:
+    colors:
+        - lightgreen
+        - bright lightgreen
+        - lightgreen
+        - dim lightgreen
+
