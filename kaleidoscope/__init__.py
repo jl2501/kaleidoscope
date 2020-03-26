@@ -21,6 +21,6 @@ load_formatters()
 #- make render system object render method available for direct calling
 log = LoggerAdapter(logger, {'name_ext' : 'module_level'})
 log.debug("Creating default render object")
-renderer = rendersys.Render()
+renderer = Render()
 render =  renderer.render_object
 
