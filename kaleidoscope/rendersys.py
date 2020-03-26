@@ -9,6 +9,7 @@ from logging import getLogger, LoggerAdapter
 logger = getLogger(__name__)
 
 import collections
+import collections.abc
 import copy
 import types
 
@@ -20,7 +21,7 @@ from collections import ChainMap
 import kaleidoscope.defaults as defaults
 from kaleidoscope.util import load_yaml_file
 from kaleidoscope.namespace.configparser.spec.object import ObjectSpecConfigParser
-from thewired import NamespaceNode
+from thewired import NamespaceNode, NamespaceLookupError
 from kaleidoscope.renderable import Renderable
 from functools import wraps
 
@@ -73,7 +74,7 @@ class Render(object):
             iterate over and render each object separately
         """
         return isinstance(obj,collections.Iterable) and not\
-            isinstance(obj, str)
+            isinstance(obj, str) and not isinstance(obj, collections.abc.Mapping)
 
 
     def __init__(self, collection_specs=None, group_specs=None, object_specs=None):
@@ -113,7 +114,7 @@ class Render(object):
         dictConfig = load_yaml_file(filename=file)
         parser = ObjectSpecConfigParser(nsroot=self.spec)
         ns_roots = parser.parse(dictConfig)
-        log.debug("object spec ns roots: {}".format(ns_roots))
+        log.debug(f"object spec ns roots: {ns_roots}")
         for ns_x in ns_roots:
             root._add_ns(ns_x)
 
@@ -131,8 +132,9 @@ class Render(object):
             align: whether or not to try and align the attributes if the object is a
                 collection of objects to render
         """
-        log = LoggerAdapter(logger, {'name_ext' : '{}.render_object'.format(\
-                self.__class__.__name__)})
+        log = LoggerAdapter(logger, 
+            {'name_ext' : f'{self.__class__.__name__}.render_object'})
+
         log.debug("Entering: spec: {} | specname: {} | attributes: {} | align: {}".format(\
                 spec, specname, attributes, align))
         if spec:
@@ -144,7 +146,11 @@ class Render(object):
         else:
             specname = self.make_default_specname_from_object(obj)
             log.debug("made specname: {}".format(specname))
-            return self.render_object_from_specname(obj, specname, align=align)
+            try:
+                return self.render_object_from_specname(obj, specname, align=align)
+            except NamespaceLookupError:
+                log.warning(f"kaleidoscope can't find specname {specname}")
+                return obj
 
 
     @unwraps_renderable
