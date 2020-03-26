@@ -20,7 +20,9 @@ def load_formatters(path=None, prefix='kaleidoscope.formatter'):
 
     log.debug("Walking packages. path: {} | prefix: {}".format(path, prefix))
     all_module_infos = list(pkgutil.walk_packages(path=path, prefix=prefix))
-    log.debug("Package Walk generated {} ModInfos: {}".format(len(all_module_infos), all_module_infos))
+    log.debug("Package Walk generated {} ModInfos: {}".format(
+        len(all_module_infos), all_module_infos))
+
     all_pkgs = filter(lambda x: x.ispkg, all_module_infos)
     all_modules = itertools.filterfalse(lambda x: x.ispkg, all_module_infos)
 
@@ -31,8 +33,7 @@ def load_formatters(path=None, prefix='kaleidoscope.formatter'):
             new_mod = importlib.import_module(modinfo.name)
             successful_imports.append(new_mod)
         except ImportError as err:
-            log.warning("Failed to import implementor module: {}: {}".format(\
+            log.warning("Failed to import formatter module: {}: {}".format(\
                 modinfo.name, err))
 
     return successful_imports
- 
