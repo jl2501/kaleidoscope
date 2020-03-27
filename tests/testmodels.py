@@ -1,8 +1,8 @@
 import unittest
 import operator
 import copy
-from kaleidoscope.models import AttributeModel, ObjectModel, GroupModel, CollectionModel
-from kaleidoscope.modelspec import ObjectModelSpec
+from kaleidoscope.model import AttributeModel, ObjectModel, GroupModel, CollectionModel
+from kaleidoscope.spec.object import ObjectModelSpec
 from kaleidoscope.color import Color
 
 class SimpleClass(object):
@@ -16,25 +16,42 @@ class TestAttributeModel(unittest.TestCase):
     def setUp(self):
         self.simple = SimpleClass()
 
-    def test_init(self):
+    def test_simple_color(self):
         am = AttributeModel(self.simple, 'simple_attribute', color=Color('green'))
         view = am.render_view()
-        self.assertEqual(view.get_render_output(), '\x1b[32m\x1b[40m\x1b[22m_simple_value_\x1b[0m')
+        expected = ('\x1b[32m\x1b[40m\x1b[22m\x1b[0m\x1b[32m\x1b[40m\x1b[22m'
+                '_simple_value_'
+                '\x1b[0m\x1b[32m\x1b[40m\x1b[22m\x1b[0m')
+        self.assertEqual(view.get_render_output(), expected)
+        view.render()
+        
 
-    def test_color(self):
-        am = AttributeModel(self.simple, 'simple_attribute', color='dim white on green')
+    def test_modified_color_on_background(self):
+        am = AttributeModel(self.simple, 'simple_attribute', color='bright white on green')
         view = am.render_view()
-        self.assertEqual(view.get_render_output(), '\x1b[37m\x1b[42m\x1b[2m_simple_value_\x1b[0m') 
+        expected = ('\x1b[32m\x1b[40m\x1b[22m\x1b[0m\x1b[37m\x1b[42m\x1b[1m'
+                '_simple_value_'
+                '\x1b[0m\x1b[32m\x1b[40m\x1b[22m\x1b[0m')
+        self.assertEqual(view.get_render_output(), expected)
+        view.render()
 
     def test_length(self):
-        am = AttributeModel(self.simple, 'simple_attribute', color='green on black', length=8)
+        am = AttributeModel(self.simple, 'simple_attribute', color='green on black', length=5)
         view = am.render_view()
-        self.assertEqual(view.get_render_output(), '\x1b[32m\x1b[40m\x1b[22m_simple_\x1b[0m') 
+        expected = ('\x1b[32m\x1b[40m\x1b[22m\x1b[0m\x1b[32m\x1b[40m\x1b[22m'
+                '_simp'
+                '\x1b[0m\x1b[32m\x1b[40m\x1b[22m\x1b[0m')
+        self.assertEqual(view.get_render_output(), expected)
+        view.render()
 
     def test_list(self):
         am = AttributeModel(self.simple, 'list_attribute', color=Color('green'))
         view = am.render_view()
-        self.assertEqual(view.get_render_output(), '\x1b[32m\x1b[40m\x1b[22m[0, 1, 2, 3, 4, 5]\x1b[0m')
+        expected =  ('\x1b[32m\x1b[40m\x1b[22m\x1b[0m\x1b[32m\x1b[40m\x1b[22m'
+                '[0, 1, 2, 3, 4, 5]'
+                '\x1b[0m\x1b[32m\x1b[40m\x1b[22m\x1b[0m')
+        self.assertEqual(view.get_render_output(), expected)
+        view.render()
 
     def test_get_source(self):
         am = AttributeModel(self.simple, 'list_attribute')
@@ -48,7 +65,11 @@ class TestAttributeModel(unittest.TestCase):
         am = AttributeModel(self.simple, 'simple_attribute')
         am.set_color('bright red on white')
         view = am.render_view()
-        self.assertEqual(view.get_render_output(), '\x1b[31m\x1b[47m\x1b[1m_simple_value_\x1b[0m')
+        expected = ('\x1b[32m\x1b[40m\x1b[22m\x1b[0m\x1b[31m\x1b[47m\x1b[1m'
+                '_simple_value_'
+                '\x1b[0m\x1b[32m\x1b[40m\x1b[22m\x1b[0m')
+        self.assertEqual(view.get_render_output(), expected)
+        view.render()
 
     def test_get_name(self):
         am = AttributeModel(self.simple, 'dict_attribute')

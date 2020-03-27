@@ -22,7 +22,7 @@ class ObjectView(ViewABC):
         """
         self.attribute_views = attribute_views
         self.delimiters = cycle(delimiters) if delimiters else repeat(ColoredText(''))
-        self.prologue = prologue if prologue else ''
+        self.prologue = prologue if prologue else ColoredText('')
         self.render_method = print
 
         self.term_size = shutil.get_terminal_size()
