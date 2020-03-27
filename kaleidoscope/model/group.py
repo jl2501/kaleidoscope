@@ -1,7 +1,7 @@
 from logging import getLogger, LoggerAdapter
 logger = getLogger(__name__)
 
-import collections
+from collections.abc import Sequence, Generator
 import itertools
 from itertools import cycle, repeat
 
@@ -143,8 +143,8 @@ class GroupModel(ModelABC):
         if colors:
             #-TODO: is there a nicer way to do these checks?
             #- want to make sure that colors is a cycle or a repeater
-            if isinstance(colors, collections.Sequence) or\
-               isinstance(colors,collections.Generator):
+            if isinstance(colors, Sequence) or\
+               isinstance(colors, Generator):
                 self.colors = cycle([Color(x) for x in colors])
 
             elif isinstance(colors, itertools.cycle) or\
