@@ -212,19 +212,19 @@ class TestGroupModel(unittest.TestCase):
         """Test the rendering of a GroupView object"""
         gm = GroupModel(object_models=[self.om1, self.om2, self.om3, self.om4])
         gv = gm.render_view()
-        render_output = gv.get_render_output()
-        print('\n' + render_output)
-        correct_output =  "0: \x1b[0m\x1b[32m\x1b[40m\x1b[22mdefault_name\x1b[0m\x1b[32m\x1b[40m\x1b[22m | \x1b[0m\x1b[0m\x1b[33m\x1b[40m\x1b[22m['vanilla', 'caramel', 'chocolate']\x1b[0m\n1: \x1b[0m\x1b[32m\x1b[40m\x1b[22mdefault_name\x1b[0m\x1b[32m\x1b[40m\x1b[22m | \x1b[0m\x1b[0m\x1b[33m\x1b[40m\x1b[22m['vanilla', 'caramel', 'chocolate']\x1b[0m\n2: \x1b[0m\x1b[37m\x1b[40m\x1b[22mdefault_name\x1b[0m\x1b[37m\x1b[40m\x1b[22m | \x1b[0m\x1b[0m\x1b[36m\x1b[40m\x1b[22m['butter pecan', 'mint chocolate chip', 'cookies n cream']\x1b[0m\n3: \x1b[0m\x1b[37m\x1b[40m\x1b[22mdefault_name\x1b[0m\x1b[37m\x1b[40m\x1b[22m | \x1b[0m\x1b[0m\x1b[36m\x1b[40m\x1b[22m['caramel', 'dead rodent guts']\x1b[0m\n" 
-        self.assertEqual(render_output, correct_output)
+        actual = gv.get_render_output()
+        expected = "\x1b[32m\x1b[40m\x1b[22m0: default_name\x1b[0m\x1b[32m\x1b[40m\x1b[22m | \x1b[0m\x1b[33m\x1b[40m\x1b[22m['vanilla', 'caramel', 'chocolate']   \x1b[0m\n\x1b[32m\x1b[40m\x1b[22m1: default_name\x1b[0m\x1b[33m\x1b[40m\x1b[22m | \x1b[0m\x1b[33m\x1b[40m\x1b[22m['vanilla', 'caramel', 'chocolate']   \x1b[0m\n\x1b[37m\x1b[40m\x1b[22m2: default_name\x1b[0m\x1b[37m\x1b[40m\x1b[22m | \x1b[0m\x1b[36m\x1b[40m\x1b[22m['butter pecan', 'mint chocolate chip', 'cookies n cream']   \x1b[0m\n\x1b[37m\x1b[40m\x1b[22m3: default_name\x1b[0m\x1b[36m\x1b[40m\x1b[22m | \x1b[0m\x1b[36m\x1b[40m\x1b[22m['caramel', 'dead rodent guts']   \x1b[0m"
+        self.assertEqual(actual, expected)
+        gv.render()
 
     def test_color_init(self):
         """Test the rendering of a GroupView object with initial color list"""
         gm = GroupModel(object_models=[self.om1, self.om2, self.om3, self.om4], colors=['dim green', 'green'])
         gv = gm.render_view()
-        render_output = gv.get_render_output()
-        print('\n' + render_output)
-        correct_output =  "\x1b[32m\x1b[40m\x1b[2m0: \x1b[0m\x1b[32m\x1b[40m\x1b[2mdefault_name\x1b[0m\x1b[32m\x1b[40m\x1b[2m | \x1b[0m\x1b[0m\x1b[32m\x1b[40m\x1b[2m['vanilla', 'caramel', 'chocolate']\x1b[0m\n\x1b[32m\x1b[40m\x1b[22m1: \x1b[0m\x1b[32m\x1b[40m\x1b[22mdefault_name\x1b[0m\x1b[32m\x1b[40m\x1b[22m | \x1b[0m\x1b[0m\x1b[32m\x1b[40m\x1b[22m['vanilla', 'caramel', 'chocolate']\x1b[0m\n\x1b[32m\x1b[40m\x1b[2m2: \x1b[0m\x1b[32m\x1b[40m\x1b[2mdefault_name\x1b[0m\x1b[32m\x1b[40m\x1b[2m | \x1b[0m\x1b[0m\x1b[32m\x1b[40m\x1b[2m['butter pecan', 'mint chocolate chip', 'cookies n cream']\x1b[0m\n\x1b[32m\x1b[40m\x1b[22m3: \x1b[0m\x1b[32m\x1b[40m\x1b[22mdefault_name\x1b[0m\x1b[32m\x1b[40m\x1b[22m | \x1b[0m\x1b[0m\x1b[32m\x1b[40m\x1b[22m['caramel', 'dead rodent guts']\x1b[0m\n"
-        self.assertEqual(render_output, correct_output)
+        actual = gv.get_render_output()
+        expected =  "\x1b[32m\x1b[40m\x1b[2m0: default_name\x1b[0m\x1b[32m\x1b[40m\x1b[2m | \x1b[0m\x1b[32m\x1b[40m\x1b[2m['vanilla', 'caramel', 'chocolate']   \x1b[0m\n\x1b[32m\x1b[40m\x1b[22m1: default_name\x1b[0m\x1b[32m\x1b[40m\x1b[22m | \x1b[0m\x1b[32m\x1b[40m\x1b[22m['vanilla', 'caramel', 'chocolate']   \x1b[0m\n\x1b[32m\x1b[40m\x1b[2m2: default_name\x1b[0m\x1b[32m\x1b[40m\x1b[2m | \x1b[0m\x1b[32m\x1b[40m\x1b[2m['butter pecan', 'mint chocolate chip', 'cookies n cream']   \x1b[0m\n\x1b[32m\x1b[40m\x1b[22m3: default_name\x1b[0m\x1b[32m\x1b[40m\x1b[22m | \x1b[0m\x1b[32m\x1b[40m\x1b[22m['caramel', 'dead rodent guts']   \x1b[0m"
+        self.assertEqual(expected, actual)
+        gv.render()
 
 
     def test_colors_with_two_delimiters(self):
@@ -232,9 +232,9 @@ class TestGroupModel(unittest.TestCase):
         gm = GroupModel(object_models=[self.om5, self.om6, self.om7], colors=['dim green', 'green'])
         gv = gm.render_view()
         render_output = gv.get_render_output()
-        print('\n' + render_output)
         expected_output = "\x1b[32m\x1b[40m\x1b[2m0: \x1b[0m\x1b[32m\x1b[40m\x1b[2mdefault_name\x1b[0m\x1b[32m\x1b[40m\x1b[2m | \x1b[0m\x1b[0m\x1b[32m\x1b[40m\x1b[2m['vanilla', 'caramel', 'chocolate']\x1b[0m\x1b[32m\x1b[40m\x1b[2m | \x1b[0m\x1b[0m\x1b[32m\x1b[40m\x1b[2mhappy\x1b[0m\n\x1b[32m\x1b[40m\x1b[22m1: \x1b[0m\x1b[32m\x1b[40m\x1b[22mdefault_name\x1b[0m\x1b[32m\x1b[40m\x1b[22m | \x1b[0m\x1b[0m\x1b[32m\x1b[40m\x1b[22m['vanilla', 'caramel', 'chocolate']\x1b[0m\x1b[32m\x1b[40m\x1b[22m | \x1b[0m\x1b[0m\x1b[32m\x1b[40m\x1b[22mhappy\x1b[0m\n\x1b[32m\x1b[40m\x1b[2m2: \x1b[0m\x1b[32m\x1b[40m\x1b[2mdefault_name\x1b[0m\x1b[32m\x1b[40m\x1b[2m | \x1b[0m\x1b[0m\x1b[32m\x1b[40m\x1b[2m['butter pecan', 'mint chocolate chip', 'cookies n cream']\x1b[0m\x1b[32m\x1b[40m\x1b[2m | \x1b[0m\x1b[0m\x1b[32m\x1b[40m\x1b[2mhappy\x1b[0m\n"
         self.assertEqual(expected_output, render_output)
+        gv.render()
 
 
 
