@@ -4,7 +4,7 @@ logger = getLogger(__name__)
 from kaleidoscope.color import Color
 from .attribute import AttributeSpec
 from itertools import repeat, cycle
-import collections
+from  collections.abc import Iterable, Sequence
 import copy
 
 class ObjectModelSpec(object):
@@ -59,7 +59,7 @@ class ObjectModelSpec(object):
 
         #- locally store parsed attributes as AttributeSpec objects
         if attributes:
-            if not isinstance(attributes, collections.Iterable):
+            if not isinstance(attributes, Iterable):
                 attributes = [attributes]
             log.debug("parsing attributes: {}".format(attributes))
             self.attributes = self.parse_attributes(attributes)
@@ -103,7 +103,7 @@ class ObjectModelSpec(object):
                 _attrs.append(AttributeSpec(attribute, *repeat(None, 2)))
                 continue
 
-            elif isinstance(attribute, collections.Sequence):
+            elif isinstance(attribute, Sequence):
                 if isinstance(attribute[0], str):
                     if len(attribute) == 1:
                         _attrs.append(AttributeSpec(attribute, *repeat(None, 2)))
