@@ -93,7 +93,11 @@ class Color(object):
 
 
     def text(self, string):
-        return self._terminal_codes+string+self.terminal_reset
+        if len(string) > 0:
+            return self._terminal_codes+string+self.terminal_reset
+        else:
+            #- don't send color / reset codes if there's no string to print
+            return ''
 
 
     def __repr__(self):
