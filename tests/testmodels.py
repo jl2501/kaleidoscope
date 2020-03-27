@@ -81,7 +81,7 @@ class TestObjectModel(unittest.TestCase):
     def setUp(self):
         self.simple = SimpleClass()
         self.om_modeled_attributes = ['simple_attribute', 'list_attribute']
-        self.oms = ObjectModelSpec(colors=['yellow', 'red', 'white'], attributes=self.om_modeled_attributes)
+        self.oms = ObjectModelSpec(colors=['yellow', 'red'], attributes=self.om_modeled_attributes)
 
     def test_init(self):
         """Test the initialization of an ObjectModel"""
@@ -93,9 +93,16 @@ class TestObjectModel(unittest.TestCase):
     def test_render(self):
         """Test the rendering of an ObjectModel"""
         om = ObjectModel(self.simple, spec=self.oms)
-        expected_output = '\x1b[33m\x1b[40m\x1b[22m_simple_value_\x1b[0m\x1b[37m\x1b[40m\x1b[22m | \x1b[0m\x1b[0m\x1b[31m\x1b[40m\x1b[22m[0, 1, 2, 3, 4, 5]\x1b[0m'
-        render_output = om.get_render_output()
-        self.assertEqual(render_output, expected_output)
+        expected = ('\x1b[33m\x1b[40m\x1b[22m'
+                '_simple_value_'
+                '\x1b[0m\x1b[33m\x1b[40m\x1b[22m'
+                ' | '
+                '\x1b[0m\x1b[31m\x1b[40m\x1b[22m'
+                '[0, 1, 2, 3, 4, 5]'
+                '\x1b[0m')
+        actual = om.get_render_output()
+        self.assertEqual(expected, actual)
+        om.render()
 
         
         
