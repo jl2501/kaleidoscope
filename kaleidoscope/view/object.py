@@ -38,6 +38,7 @@ class ObjectView(ViewABC):
             line-length of the terminal
         """
         log = LoggerAdapter(logger, {'name_ext' : 'ObjectView.get_render_output'})
+
         #- figure out the width of each attribute view
         per_attr_widths = list()
         per_attr_colors = list()
@@ -60,6 +61,7 @@ class ObjectView(ViewABC):
         #- build a list of lines to render for each attribute view
         per_attr_text_lines = [[]] * len(self.attribute_views)
         per_attr_lines = [[]] * len(self.attribute_views)
+
         for n, attr_view in enumerate(self.attribute_views):
             attr_rd = attr_view.get_render_data()
             text_lines = attr_rd.attribute.plain().split('\n')
@@ -83,6 +85,7 @@ class ObjectView(ViewABC):
         #- combine the lists of attribute lines into a single list of object lines
         render_text_lines = list()
         render_lines = list()
+
         for line_num in range(object_view_lines):
             text_line = ''
             render_line = list()
@@ -96,10 +99,10 @@ class ObjectView(ViewABC):
                     log.debug("cur_text_line initial:")
                     log.debug(attr_text_lines[line_num])
                     log.debug("cur_render_line initial: ")
-                    log.debug("'{}'".format(cur_render_line))
+                    log.debug(f"'{cur_render_line}'")
                     cur_render_line.text += ' ' * pad_len
                     log.debug("cur_render_line plus padding: ")
-                    log.debug("'{}'".format(cur_render_line))
+                    log.debug(f"'{cur_render_line}'")
                     render_line.append(cur_render_line)
 
                     if m < len(per_attr_text_lines) - 1:
@@ -112,19 +115,19 @@ class ObjectView(ViewABC):
                     log.debug("adding padded stanza line")
                     text_line += ' ' * per_attr_widths[m]
                     log.debug("padded text line: ")
-                    log.debug("'{}'".format(text_line))
+                    log.debug(f"'{text_line}'")
                     #- all attribute lines should have the same color
                     color = per_attr_lines[m][0].color
                     render_line.append(ColoredText(' ' * per_attr_widths[m], color))
                     log.debug("padded render line: ")
-                    log.debug("'{}'".format(render_line))
+                    log.debug("'{render_line}'")
 
                     if m < len(per_attr_text_lines) - 1:
                         delim = next(self.delimiters)
                         text_line += delim.plain()
                         render_line.append(delim)
                         log.debug("padded render_line plus delim:")
-                        log.debug("{}".format(render_line))
+                        log.debug(f"{render_line}")
 
             render_text_lines.append(text_line)
             log.debug('rendered render_line:')
