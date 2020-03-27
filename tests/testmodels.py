@@ -124,7 +124,10 @@ class TestGroupModel(unittest.TestCase):
 
         self.simple1 = SimpleClass2()
         self.simple2 = SimpleClass2()
-        self.simple3 = SimpleClass2(flavors=['butter pecan', 'mint chocolate chip', 'cookies n cream'])
+        self.simple3 = SimpleClass2(flavors=[
+                'butter pecan',
+                'mint chocolate chip',
+                'cookies n cream'])
         self.simple4 = SimpleClass2(flavors=['caramel', 'dead rodent guts'])
         self.modeled_attributes1 = ['name', 'flavors']
 
