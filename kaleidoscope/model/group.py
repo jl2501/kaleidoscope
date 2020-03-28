@@ -30,7 +30,9 @@ class GroupModel(ModelABC):
             name: the name of this group
             object_models: if you'd like to initialize with a list of ObjectModels
             test_method: the method that will be called on an ObjectModel to determine if it is a member of this group
-            cmp_method: used to sort the objects in the group
+            sort_attr: used to sort the objects in the group
+            colors: TODO: document
+            align: TODO: document
         """
         log = LoggerAdapter(logger, {'name_ext' : 'GroupModel.__init__'})
         log.debug("Entering: align={}".format(align))
@@ -63,6 +65,7 @@ class GroupModel(ModelABC):
         """Append the object model to the end of the object model list.
         model: the object model to add
         force: boolean; if True, add the model regardless of whether or not it passes the test"""
+        #- TODO: make this return the object models so it can be chained
         if force or self.test_method and self.test_method(model.get_source()):
             self.object_models.append(model)
             return True
@@ -76,6 +79,7 @@ class GroupModel(ModelABC):
         index: insert object model before this index. (See 'force' param)
         model: the object model to insert
         force: insert the model even if it doesn't pass the group test"""
+        #- TODO: make this return the object models so it can be chained
         if force or self.test_method(model.get_source()):
             self.object_models.insert(index, model)
             return True
@@ -201,7 +205,7 @@ class GroupModel(ModelABC):
                 for attribute_model_x in object_model_x.attribute_models:
                     attr_name = attribute_model_x.name
                     attr_width = attribute_model_x.get_width()
-                    log.debug("'{}' width: {}".format(attr_name, attr_width))
+                    log.debug(f"attr_name:'{attr_name}' | attr_width: {attr_width}")
                     try:
                         attr_maxlens[attr_name] = max(attr_maxlens[attr_name], attr_width)
 
@@ -211,8 +215,8 @@ class GroupModel(ModelABC):
         object_views = list()
         for object_model_x in self.object_models:
             if self.align:
-                #- TODO: if each attribute has a defined length, skip this
                 #- dynamically align attribute lengths
+                #- TODO: if each attribute has a defined length, skip this
                 for attribute_model_x in object_model_x.attribute_models:
                     attribute_model_x.length = attr_maxlens[attribute_model_x.name]
             object_views.append(object_model_x.render_view())

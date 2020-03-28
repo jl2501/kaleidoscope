@@ -42,6 +42,7 @@ class ObjectView(ViewABC):
         #- figure out the width of each attribute view
         per_attr_widths = list()
         per_attr_colors = list()
+
         for n, attr_view in enumerate(self.attribute_views):
             attr_text = attr_view.get_render_data().attribute.plain()
             view_lines = attr_text.split('\n')
@@ -92,17 +93,29 @@ class ObjectView(ViewABC):
 
             for m, attr_text_lines in enumerate(per_attr_text_lines):
                 if len(attr_text_lines) > line_num:
+                    log.debug(f"m: {m} | line_num: {line_num}")
+                    log.debug(f"per_attr_widths[m]: {per_attr_widths[m]}")
+                    log.debug(("len(attr_text_lines[line_num]):"
+                            f"{len(attr_text_lines[line_num])}"))
+
                     pad_len = per_attr_widths[m] - len(attr_text_lines[line_num])
+
+                    log.debug(f"initial pad_len: {pad_len}")
+
                     text_line += attr_text_lines[line_num]
                     text_line += ' ' * pad_len
                     cur_render_line = per_attr_lines[m][line_num]
+
                     log.debug("cur_text_line initial:")
-                    log.debug(attr_text_lines[line_num])
+                    log.debug(f"'{attr_text_lines[line_num]}'")
                     log.debug("cur_render_line initial: ")
                     log.debug(f"'{cur_render_line}'")
+
                     cur_render_line.text += ' ' * pad_len
+
                     log.debug("cur_render_line plus padding: ")
                     log.debug(f"'{cur_render_line}'")
+
                     render_line.append(cur_render_line)
 
                     if m < len(per_attr_text_lines) - 1:
