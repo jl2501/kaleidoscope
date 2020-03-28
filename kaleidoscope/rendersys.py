@@ -9,7 +9,8 @@ from logging import getLogger, LoggerAdapter
 logger = getLogger(__name__)
 
 import collections
-import collections.abc
+from collections import ChainMap
+from collections.abc import Mapping, Iterable
 import copy
 import types
 
@@ -17,7 +18,6 @@ from kaleidoscope.color import get_default_color_scheme
 from kaleidoscope.spec import ObjectModelSpec
 from kaleidoscope.model import ObjectModel, GroupModel, CollectionModel
 from kaleidoscope.color import Color, ColoredText
-from collections import ChainMap
 import kaleidoscope.defaults as defaults
 from kaleidoscope.util import load_yaml_file
 from kaleidoscope.namespace.configparser.spec.object import ObjectSpecConfigParser
@@ -73,8 +73,8 @@ class Render(object):
             returns true for all iterables that aren't strings and bytes / the stuff we actually want to
             iterate over and render each object separately
         """
-        return isinstance(obj,collections.Iterable) and not\
-            isinstance(obj, str) and not isinstance(obj, collections.abc.Mapping)
+        return isinstance(obj, Iterable) and not\
+            isinstance(obj, str) and not isinstance(obj, Mapping)
 
 
     def __init__(self, collection_specs=None, group_specs=None, object_specs=None):
