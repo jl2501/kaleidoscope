@@ -1,6 +1,6 @@
 """Test the render.color module"""
 import unittest
-from kaleidoscope.render import Render
+from kaleidoscope.rendersys import Render
 
 class SimpleClass(object):
     def __init__(self, *args,**kwargs):
@@ -16,7 +16,7 @@ class TestRenderingEngine(unittest.TestCase):
     def test_render_obj(self):
         r = Render()
         sc = SimpleClass(a='AAA', b='BBB', c='CCC', d='DDD', e='EEE')
-        r.render_obj(sc, ['a','b','c','d','e'])
+        r.render_object(sc, attributes=['a','b','c','d','e'])
 
 
 if __name__ == '__main__':
