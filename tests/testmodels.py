@@ -19,9 +19,7 @@ class TestAttributeModel(unittest.TestCase):
     def test_simple_color(self):
         am = AttributeModel(self.simple, 'simple_attribute', color=Color('green'))
         view = am.render_view()
-        expected = ('\x1b[32m\x1b[40m\x1b[22m\x1b[0m\x1b[32m\x1b[40m\x1b[22m'
-                '_simple_value_'
-                '\x1b[0m\x1b[32m\x1b[40m\x1b[22m\x1b[0m')
+        expected = '\x1b[32m\x1b[40m\x1b[22m_simple_value_\x1b[0m'
         self.assertEqual(view.get_render_output(), expected)
         view.render()
         
@@ -29,27 +27,21 @@ class TestAttributeModel(unittest.TestCase):
     def test_modified_color_on_background(self):
         am = AttributeModel(self.simple, 'simple_attribute', color='bright white on green')
         view = am.render_view()
-        expected = ('\x1b[32m\x1b[40m\x1b[22m\x1b[0m\x1b[37m\x1b[42m\x1b[1m'
-                '_simple_value_'
-                '\x1b[0m\x1b[32m\x1b[40m\x1b[22m\x1b[0m')
+        expected = '\x1b[37m\x1b[42m\x1b[1m_simple_value_\x1b[0m'
         self.assertEqual(view.get_render_output(), expected)
         view.render()
 
     def test_length(self):
         am = AttributeModel(self.simple, 'simple_attribute', color='green on black', length=5)
         view = am.render_view()
-        expected = ('\x1b[32m\x1b[40m\x1b[22m\x1b[0m\x1b[32m\x1b[40m\x1b[22m'
-                '_simp'
-                '\x1b[0m\x1b[32m\x1b[40m\x1b[22m\x1b[0m')
+        expected = '\x1b[32m\x1b[40m\x1b[22m_simp\x1b[0m'
         self.assertEqual(view.get_render_output(), expected)
         view.render()
 
     def test_list(self):
         am = AttributeModel(self.simple, 'list_attribute', color=Color('green'))
         view = am.render_view()
-        expected =  ('\x1b[32m\x1b[40m\x1b[22m\x1b[0m\x1b[32m\x1b[40m\x1b[22m'
-                '[0, 1, 2, 3, 4, 5]'
-                '\x1b[0m\x1b[32m\x1b[40m\x1b[22m\x1b[0m')
+        expected = '\x1b[32m\x1b[40m\x1b[22m[0, 1, 2, 3, 4, 5]\x1b[0m'
         self.assertEqual(view.get_render_output(), expected)
         view.render()
 
@@ -65,9 +57,7 @@ class TestAttributeModel(unittest.TestCase):
         am = AttributeModel(self.simple, 'simple_attribute')
         am.set_color('bright red on white')
         view = am.render_view()
-        expected = ('\x1b[32m\x1b[40m\x1b[22m\x1b[0m\x1b[31m\x1b[47m\x1b[1m'
-                '_simple_value_'
-                '\x1b[0m\x1b[32m\x1b[40m\x1b[22m\x1b[0m')
+        expected = '\x1b[31m\x1b[47m\x1b[1m_simple_value_\x1b[0m'
         self.assertEqual(view.get_render_output(), expected)
         view.render()
 
@@ -216,7 +206,7 @@ class TestGroupModel(unittest.TestCase):
         gm = GroupModel(object_models=[self.om1, self.om2, self.om3, self.om4])
         gv = gm.render_view()
         actual = gv.get_render_output()
-        expected = "\x1b[32m\x1b[40m\x1b[22m0: default_name\x1b[0m\x1b[32m\x1b[40m\x1b[22m | \x1b[0m\x1b[33m\x1b[40m\x1b[22m['vanilla', 'caramel', 'chocolate']   \x1b[0m\n\x1b[32m\x1b[40m\x1b[22m1: default_name\x1b[0m\x1b[33m\x1b[40m\x1b[22m | \x1b[0m\x1b[33m\x1b[40m\x1b[22m['vanilla', 'caramel', 'chocolate']   \x1b[0m\n\x1b[37m\x1b[40m\x1b[22m2: default_name\x1b[0m\x1b[37m\x1b[40m\x1b[22m | \x1b[0m\x1b[36m\x1b[40m\x1b[22m['butter pecan', 'mint chocolate chip', 'cookies n cream']   \x1b[0m\n\x1b[37m\x1b[40m\x1b[22m3: default_name\x1b[0m\x1b[36m\x1b[40m\x1b[22m | \x1b[0m\x1b[36m\x1b[40m\x1b[22m['caramel', 'dead rodent guts']   \x1b[0m"
+        expected = "\x1b[32m\x1b[40m\x1b[22m0: default_name\x1b[0m\x1b[32m\x1b[40m\x1b[22m | \x1b[0m\x1b[33m\x1b[40m\x1b[22m['vanilla', 'caramel', 'chocolate']\x1b[0m\n\x1b[32m\x1b[40m\x1b[22m1: default_name\x1b[0m\x1b[33m\x1b[40m\x1b[22m | \x1b[0m\x1b[33m\x1b[40m\x1b[22m['vanilla', 'caramel', 'chocolate']\x1b[0m\n\x1b[37m\x1b[40m\x1b[22m2: default_name\x1b[0m\x1b[37m\x1b[40m\x1b[22m | \x1b[0m\x1b[36m\x1b[40m\x1b[22m['butter pecan', 'mint chocolate chip', 'cookies n cream']\x1b[0m\n\x1b[37m\x1b[40m\x1b[22m3: default_name\x1b[0m\x1b[36m\x1b[40m\x1b[22m | \x1b[0m\x1b[36m\x1b[40m\x1b[22m['caramel', 'dead rodent guts']\x1b[0m"
         self.assertEqual(actual, expected)
         gv.render()
 
@@ -225,7 +215,7 @@ class TestGroupModel(unittest.TestCase):
         gm = GroupModel(object_models=[self.om1, self.om2, self.om3, self.om4], colors=['dim green', 'green'])
         gv = gm.render_view()
         actual = gv.get_render_output()
-        expected =  "\x1b[32m\x1b[40m\x1b[2m0: default_name\x1b[0m\x1b[32m\x1b[40m\x1b[2m | \x1b[0m\x1b[32m\x1b[40m\x1b[2m['vanilla', 'caramel', 'chocolate']   \x1b[0m\n\x1b[32m\x1b[40m\x1b[22m1: default_name\x1b[0m\x1b[32m\x1b[40m\x1b[22m | \x1b[0m\x1b[32m\x1b[40m\x1b[22m['vanilla', 'caramel', 'chocolate']   \x1b[0m\n\x1b[32m\x1b[40m\x1b[2m2: default_name\x1b[0m\x1b[32m\x1b[40m\x1b[2m | \x1b[0m\x1b[32m\x1b[40m\x1b[2m['butter pecan', 'mint chocolate chip', 'cookies n cream']   \x1b[0m\n\x1b[32m\x1b[40m\x1b[22m3: default_name\x1b[0m\x1b[32m\x1b[40m\x1b[22m | \x1b[0m\x1b[32m\x1b[40m\x1b[22m['caramel', 'dead rodent guts']   \x1b[0m"
+        expected = "\x1b[32m\x1b[40m\x1b[2m0: default_name\x1b[0m\x1b[32m\x1b[40m\x1b[2m | \x1b[0m\x1b[32m\x1b[40m\x1b[2m['vanilla', 'caramel', 'chocolate']\x1b[0m\n\x1b[32m\x1b[40m\x1b[22m1: default_name\x1b[0m\x1b[32m\x1b[40m\x1b[22m | \x1b[0m\x1b[32m\x1b[40m\x1b[22m['vanilla', 'caramel', 'chocolate']\x1b[0m\n\x1b[32m\x1b[40m\x1b[2m2: default_name\x1b[0m\x1b[32m\x1b[40m\x1b[2m | \x1b[0m\x1b[32m\x1b[40m\x1b[2m['butter pecan', 'mint chocolate chip', 'cookies n cream']\x1b[0m\n\x1b[32m\x1b[40m\x1b[22m3: default_name\x1b[0m\x1b[32m\x1b[40m\x1b[22m | \x1b[0m\x1b[32m\x1b[40m\x1b[22m['caramel', 'dead rodent guts']\x1b[0m"
         self.assertEqual(expected, actual)
         gv.render()
 
@@ -234,9 +224,9 @@ class TestGroupModel(unittest.TestCase):
         """Test display of a GroupModel when the ObjectModelSpecs have three attributes to display so we get 2 delimiters to inspect"""
         gm = GroupModel(object_models=[self.om5, self.om6, self.om7], colors=['dim green', 'green'])
         gv = gm.render_view()
-        render_output = gv.get_render_output()
-        expected_output = "\x1b[32m\x1b[40m\x1b[2m0: \x1b[0m\x1b[32m\x1b[40m\x1b[2mdefault_name\x1b[0m\x1b[32m\x1b[40m\x1b[2m | \x1b[0m\x1b[0m\x1b[32m\x1b[40m\x1b[2m['vanilla', 'caramel', 'chocolate']\x1b[0m\x1b[32m\x1b[40m\x1b[2m | \x1b[0m\x1b[0m\x1b[32m\x1b[40m\x1b[2mhappy\x1b[0m\n\x1b[32m\x1b[40m\x1b[22m1: \x1b[0m\x1b[32m\x1b[40m\x1b[22mdefault_name\x1b[0m\x1b[32m\x1b[40m\x1b[22m | \x1b[0m\x1b[0m\x1b[32m\x1b[40m\x1b[22m['vanilla', 'caramel', 'chocolate']\x1b[0m\x1b[32m\x1b[40m\x1b[22m | \x1b[0m\x1b[0m\x1b[32m\x1b[40m\x1b[22mhappy\x1b[0m\n\x1b[32m\x1b[40m\x1b[2m2: \x1b[0m\x1b[32m\x1b[40m\x1b[2mdefault_name\x1b[0m\x1b[32m\x1b[40m\x1b[2m | \x1b[0m\x1b[0m\x1b[32m\x1b[40m\x1b[2m['butter pecan', 'mint chocolate chip', 'cookies n cream']\x1b[0m\x1b[32m\x1b[40m\x1b[2m | \x1b[0m\x1b[0m\x1b[32m\x1b[40m\x1b[2mhappy\x1b[0m\n"
-        self.assertEqual(expected_output, render_output)
+        actual = gv.get_render_output()
+        expected = "\x1b[32m\x1b[40m\x1b[2m0: default_name\x1b[0m\x1b[32m\x1b[40m\x1b[2m | \x1b[0m\x1b[32m\x1b[40m\x1b[2m['vanilla', 'caramel', 'chocolate']\x1b[0m\x1b[32m\x1b[40m\x1b[2m | \x1b[0m\x1b[32m\x1b[40m\x1b[2mhappy\x1b[0m\n\x1b[32m\x1b[40m\x1b[22m1: default_name\x1b[0m\x1b[32m\x1b[40m\x1b[22m | \x1b[0m\x1b[32m\x1b[40m\x1b[22m['vanilla', 'caramel', 'chocolate']\x1b[0m\x1b[32m\x1b[40m\x1b[22m | \x1b[0m\x1b[32m\x1b[40m\x1b[22mhappy\x1b[0m\n\x1b[32m\x1b[40m\x1b[2m2: default_name\x1b[0m\x1b[32m\x1b[40m\x1b[2m | \x1b[0m\x1b[32m\x1b[40m\x1b[2m['butter pecan', 'mint chocolate chip', 'cookies n cream']\x1b[0m\x1b[32m\x1b[40m\x1b[2m | \x1b[0m\x1b[32m\x1b[40m\x1b[2mhappy\x1b[0m"
+        self.assertEqual(expected, actual)
         gv.render()
 
 
