@@ -48,7 +48,12 @@ class ObjectView(ViewABC):
             view_lines = attr_text.split('\n')
             if len(view_lines) <= 1:
                 log.debug("single line attribute view")
-                attr_width = len(attr_text) + len(self.prologue.plain())
+                if n == 0:
+                    log.debug(f"adding prologue length to attr_width: {attr_text}")
+                    attr_width = len(attr_text) + len(self.prologue.plain())
+                else:
+                    log.debug(f"not adding prologue length to attr_width: {attr_text}")
+                    attr_width = len(attr_text)
             else:
                 log.debug("multi-line attribute view: ")
                 log.debug("{}".format(view_lines))
