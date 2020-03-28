@@ -1,6 +1,6 @@
 """Test the model specifications"""
 import unittest
-from kaleidoscope.modelspec import ObjectModelSpec
+from kaleidoscope.spec.object import ObjectModelSpec
 
 class Simple(object):
     def __init__(self):
@@ -15,8 +15,8 @@ class TestObjectModelSpec(unittest.TestCase):
 
     def test_init(self):
         oms = ObjectModelSpec(colors=['bright green on black', 'bright white on black'], attributes=['simple_attribute', 'list_attribute', 'dict_attribute'])
-        self.assertEqual(oms.colors[0], 'bright green on black')
-        self.assertEqual(oms.attributes[0],'simple_attribute')
+        self.assertEqual(next(oms.colors).color, 'bright green on black')
+        self.assertEqual(oms.attributes[0].name,'simple_attribute')
 
 if __name__ == '__main__':
     unittest.main()
