@@ -3,7 +3,7 @@ logger = getLogger(__name__)
 
 import shutil
 from itertools import cycle, repeat
-from functools import reduce
+from functools import reduce, partial
 from operator import add
 from .viewabc import ViewABC
 from kaleidoscope.color import ColoredText
@@ -21,7 +21,17 @@ class ObjectView(ViewABC):
             delimiter: ColoredText instance string used to separate AttributeViews when rendering
         """
         self.attribute_views = attribute_views
-        self.delimiters = cycle(delimiters) if delimiters else repeat(ColoredText(''))
+
+
+        self.delimiters = [None] * len(delimiters)
+        if delimiters:
+            for i, delim in enumerate(delimiters[:]):
+                if isinstance(delim, str):
+                    delimiters[i] = ColoredText(delim, color=None)
+
+        self.delimiters = cycle(delimiters) if delimiters else repeat(
+                ColoredText('', color=None))
+       
         self.prologue = prologue if prologue else ColoredText('')
         self.render_method = print
 

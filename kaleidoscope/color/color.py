@@ -21,6 +21,8 @@ class Color(object):
                 'dim yellow on black'
         '''
 
+        self._init_color = color
+
         if not isinstance(color, Color):
             (self.foreground, self.style, self.background) = self.parse_color_name(color)
             #- fail fast: if the color is invalid,just fail now
@@ -29,10 +31,9 @@ class Color(object):
             except ValueError as err:
                 raise err
         else:
-            init_color = color
-            self.foreground = init_color.foreground
-            self.background = init_color.background
-            self.style = init_color.style
+            self.foreground = self._init_color.foreground
+            self.background = self._init_color.background
+            self.style = self._init_color.style
             self._terminal_codes = self.terminal_codes()
 
 
@@ -94,7 +95,10 @@ class Color(object):
 
     def text(self, string):
         if len(string) > 0:
-            return self._terminal_codes+string+self.terminal_reset
+            if self._init_color is not None:
+                return self._terminal_codes+string+self.terminal_reset
+            else:
+                return string
         else:
             #- don't send color / reset codes if there's no string to print
             return ''

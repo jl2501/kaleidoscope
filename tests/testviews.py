@@ -1,5 +1,6 @@
 import unittest
-from kaleidoscope.views import AttributeView, ObjectView
+from kaleidoscope.view.attribute import AttributeView
+from kaleidoscope.view.object import ObjectView
 
 class TestAttributeView(unittest.TestCase):
     def test_init(self):
@@ -14,7 +15,8 @@ class TestObjectView(unittest.TestCase):
         self.avs = [av1, av2]
 
     def test_init(self):
-        ov = ObjectView(self.avs, delimiter=' | ')
+        delimiter = ' | '
+        ov = ObjectView(self.avs, delimiters=[delimiter])
         self.assertEqual(ov.get_render_output(),'1_test_attribute | 2_test_attribute') 
 
 
