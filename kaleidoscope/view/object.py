@@ -129,7 +129,7 @@ class ObjectView(ViewABC):
                     text_line += ' ' * per_attr_widths[m]
                     log.debug("padded text line: ")
                     log.debug(f"'{text_line}'")
-                    #- all attribute lines should have the same color
+                    #- all attribute lines should have the same color for now
                     color = per_attr_lines[m][0].color
                     render_line.append(ColoredText(' ' * per_attr_widths[m], color))
                     log.debug("padded render line: ")
