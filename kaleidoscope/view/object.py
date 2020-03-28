@@ -60,6 +60,12 @@ class ObjectView(ViewABC):
         log.debug("per_attr_widths: {}".format(per_attr_widths))
 
         #- build a list of lines to render for each attribute view
+        #- one is just the text, so the length of the line is the
+        #- length of the visible characters
+        #- then we have the lines per attribute that also contain color code
+        #- the text lines we use to determine the display length
+        #- but the manipulation of the attribute view must
+        #- be done on the lines to actually be rendered
         per_attr_text_lines = [[]] * len(self.attribute_views)
         per_attr_lines = [[]] * len(self.attribute_views)
 
