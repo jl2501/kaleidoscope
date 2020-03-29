@@ -9,15 +9,17 @@ class SimpleClass(object):
 
 
 class TestRenderingEngine(unittest.TestCase):
-    def test_init(self):
-        r = Render()
-        
+    def setUp(self):
+        self.r = Render()
 
     def test_render_obj(self):
-        r = Render()
         sc = SimpleClass(a='AAA', b='BBB', c='CCC', d='DDD', e='EEE')
-        r.render_object(sc, attributes=['a','b','c','d','e'])
+        self.r.render_object(sc, attributes=['a','b','c','d','e'])
 
+    def test_builtin_specname(self):
+        l = [1,2,3,4]
+        l_specname = self.r.make_default_specname_from_object(l)
+        self.assertEqual('builtins.int', l_specname)
 
 if __name__ == '__main__':
     unittest.main()
