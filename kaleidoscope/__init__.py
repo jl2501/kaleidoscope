@@ -25,4 +25,4 @@ renderer = Render()
 render =  renderer.render_object
 
 #- enable logging for debugging /development
-logging.basicConfig(level = logging.DEBUG)
+#logging.basicConfig(level = logging.DEBUG)

@@ -1,10 +1,12 @@
 from logging import getLogger, LoggerAdapter
 logger = getLogger(__name__)
 
-from thewired import NamespaceConfigParser
-from thewired import NamespaceConfigParsingError
 import operator
 import collections
+from collections.abc import Mapping
+
+from thewired import NamespaceConfigParser
+from thewired import NamespaceConfigParsingError
 from kaleidoscope.spec import AttributeSpec, FormatterSpec
 
 
@@ -29,7 +31,7 @@ class ObjectSpecConfigParser(NamespaceConfigParser):
                 if key == 'attributes':
                     attributes = list()
                     for attribute in dictConfig[key]:
-                        if isinstance(attribute, collections.Mapping):
+                        if isinstance(attribute, Mapping):
                             #- only 1 top-level key, the attribute name
                             _name = list(attribute.keys())[0]
                             _length = attribute[_name].get('length', None)
@@ -44,7 +46,7 @@ class ObjectSpecConfigParser(NamespaceConfigParser):
                                 _formatter_name = None
                                 _formatter_kwargs = None
 
-                                if isinstance(_formatter, collections.Mapping):
+                                if isinstance(_formatter, Mapping):
                                     log.debug("Detected formatter spec (mapping)")
                                     _formatter_kwargs = dict()
                                     for fkey in _formatter.keys():
