@@ -1,2 +1,2 @@
-config_dir = "~/.kaleidoscope"
+config_dir = "~/.config/kaleidoscope"
 object_spec_file = "objectspec.yaml"
