@@ -10,7 +10,8 @@ colorama = "^0.4.3"
 ipython = "^7.13.0"
 "ruamel.yaml" = "^0.16.10"
 botocore = "^1.15.29"
-thewired = {git = "https://github.com/jl2501/thewired.git", rev = "master"}
+#thewired = {git = "https://github.com/jl2501/thewired.git", rev = "master"}
+thewired = {path = "../thewired"}
 boto3 = "^1.14.28"
 
 [tool.poetry.dev-dependencies]
