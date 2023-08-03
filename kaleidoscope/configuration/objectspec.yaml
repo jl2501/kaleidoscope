@@ -74,3 +74,17 @@ boto3:
                         - volume_type
                         - iops
                         - encrypted
+            s3:
+                description: default colors for AWS S3
+                colors:
+                    - yellow
+                    - bright yellow
+                    - yellow
+                    - dim yellow
+                Bucket:
+                    description: default style for boto3 AWS S3 bucket
+
+                    attributes:
+                        - name
+                        - meta.client.meta.region_name
+                        - creation_date
