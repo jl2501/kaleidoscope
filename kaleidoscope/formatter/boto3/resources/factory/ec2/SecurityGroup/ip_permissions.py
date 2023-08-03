@@ -3,8 +3,6 @@
 
 import functools
 
-ec2_rs_t = dict()
-
 def _format_ip_permissions(ip_permissions, source, ec2_rs):
     """
     Description:
@@ -21,9 +19,8 @@ def _format_ip_permissions(ip_permissions, source, ec2_rs):
     import cush
     #- create the table of EC2 implementors to access AWS when we render
     c = cush.CushApplication('default')
-    ec2_rs = c.implementor.boto3.aws.ec2.resource._list_leaves()
-    for ec2_r in ec2_rs:
-        ec2_rs_t[ec2_r.meta.client.meta.region_name] = ec2_r
+    ec2_rs = c._ns.get_leaf_nodes(".implementor.boto3.aws.ec2.resource")
+    ec2_rs_t = { ec2_r.meta.client.meta.region_name: ec2_r for ec2_r in ec2_rs }
 
     output = list()
     for rule in ip_permissions:
@@ -54,4 +51,5 @@ def _format_ip_permissions(ip_permissions, source, ec2_rs):
         output.append('---------')
     return output
 
+ec2_rs_t = dict()
 format_ip_permissions = functools.partial(_format_ip_permissions, ec2_rs=ec2_rs_t)
