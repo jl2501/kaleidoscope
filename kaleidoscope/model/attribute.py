@@ -6,7 +6,7 @@ from .modelabc import ModelABC
 from kaleidoscope.view import AttributeView
 from kaleidoscope.color import Color
 from kaleidoscope.spec import FormatterSpec
-import collections
+from collections.abc import Iterable
 import functools
 from functools import partial
 import importlib
@@ -237,7 +237,7 @@ class AttributeModel(ModelABC):
             #- create an Iterable to simplify the rest of the processing
             view_data = [view_data]
 
-        elif isinstance(view_data, collections.Iterable):
+        elif isinstance(view_data, Iterable):
             view_lines = list(view_data)
             msg = ["render method for '{}' returned iterable".format(self.name)]
             msg.append(" of length: {}".format(len(view_lines)))
