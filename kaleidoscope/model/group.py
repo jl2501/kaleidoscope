@@ -224,7 +224,3 @@ class GroupModel(ModelABC):
         groupView = GroupView(object_views=object_views)
         log.debug("Returning groupView: {}".format(groupView))
         return groupView
-
-
-
-

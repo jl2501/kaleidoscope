@@ -37,7 +37,3 @@ class ModelABC(ABC):
             intermediate View object
         """
         self.render_view().render()
-
-
-
-

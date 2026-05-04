@@ -9,21 +9,22 @@ from logging import getLogger, LoggerAdapter
 logger = getLogger(__name__)
 
 import collections
-from collections import ChainMap
-from collections.abc import Mapping, Iterable
 import copy
 import types
+from collections import ChainMap
+from collections.abc import Mapping, Iterable
+from functools import wraps
 
+import kaleidoscope.exceptions as exceptions
+import kaleidoscope.defaults as defaults
 from kaleidoscope.color import get_default_color_scheme
 from kaleidoscope.spec import ObjectModelSpec
 from kaleidoscope.model import ObjectModel, GroupModel, CollectionModel
 from kaleidoscope.color import Color, ColoredText
-import kaleidoscope.defaults as defaults
 from kaleidoscope.util import load_yaml_file
 from kaleidoscope.namespace.configparser.spec.object import ObjectSpecConfigParser
-from thewired import NamespaceNode, NamespaceLookupError
 from kaleidoscope.renderable import Renderable
-from functools import wraps
+from thewired import NamespaceNode, NamespaceLookupError
 
 
 def unwraps_renderable(func):
@@ -121,7 +122,7 @@ class Render(object):
 
 
     @unwraps_renderable
-    def render_object(self, obj, spec=None, specname=None, attributes=None, align=True):
+    def render_object(self, obj, spec=None, specname: str | None = None, attributes=None, align: bool = True):
         """
         Description:
             Top-level object rendering method.
@@ -150,7 +151,7 @@ class Render(object):
                 return self.render_object_from_specname(obj, specname, align=align)
             except NamespaceLookupError:
                 log.warning(f"kaleidoscope can't find specname {specname}")
-                return obj
+                raise exceptions.RenderError
 
 
     @unwraps_renderable
@@ -208,7 +209,6 @@ class Render(object):
         #- collect the ObjectModels in a GroupModel
         group_model = GroupModel(object_models=obj_models, colors=colors, align=align)
         #-TODO: wrap GroupModel in CollectionModel here
-
         return group_model.render()
 
 
